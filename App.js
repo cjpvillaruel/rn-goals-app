@@ -37,30 +37,33 @@ export default function App() {
     setModalVisible(false);
   }
   return (
-    <View style={styles.appContainer}>
-      {modalIsVisible && (
-        <GoalInput
-          addGoalHandler={addGoalHandler}
-          closeHandler={closeModalHandler}
+    <>
+      <StatusBar style="auto" />
+      <View style={styles.appContainer}>
+        {modalIsVisible && (
+          <GoalInput
+            addGoalHandler={addGoalHandler}
+            closeHandler={closeModalHandler}
+          />
+        )}
+        <Button
+          title="Add New Goal"
+          color="#5e0acc"
+          onPress={startAddGoalHandler}
         />
-      )}
-      <Button
-        title="Add New Goal"
-        color="#5e0acc"
-        onPress={startAddGoalHandler}
-      />
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => (
-            <GoalItem
-              itemData={itemData}
-              handleDelete={() => handleDelete(itemData.item.key)}
-            />
-          )}
-        ></FlatList>
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => (
+              <GoalItem
+                itemData={itemData}
+                handleDelete={() => handleDelete(itemData.item.key)}
+              />
+            )}
+          ></FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
