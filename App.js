@@ -15,9 +15,8 @@ import GoalItem from "./components/GoalItem";
 export default function App() {
   const [goal, setGoal] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-  // const [add]
+  const [modalIsVisible, setModalVisible] = useState(false);
   function goalInputHandler(enteredText) {
-    // console.log(enteredText);
     setGoal(enteredText);
   }
   function addGoalHandler(goal) {
@@ -30,10 +29,26 @@ export default function App() {
   function handleDelete(id) {
     setCourseGoals((currentGoals) => currentGoals.filter((a) => a.key !== id));
   }
+
+  function startAddGoalHandler() {
+    setModalVisible(true);
+  }
+  function closeModalHandler() {
+    setModalVisible(false);
+  }
   return (
     <View style={styles.appContainer}>
-      <GoalInput addGoalHandler={addGoalHandler} />
-
+      {modalIsVisible && (
+        <GoalInput
+          addGoalHandler={addGoalHandler}
+          closeHandler={closeModalHandler}
+        />
+      )}
+      <Button
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
         <FlatList
           data={courseGoals}
@@ -50,18 +65,12 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   appContainer: {
     flex: 1,
     paddingTop: 50,
     paddingHorizontal: 16,
   },
   goalsContainer: {
-    flex: 3,
+    flex: 4,
   },
 });
